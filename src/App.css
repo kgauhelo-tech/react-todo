@@ -234,3 +234,16 @@ input::placeholder {
   border: 2px solid var(--primary);
   color: var(--primary);
 }
+
+
+/* Empty State Styling */
+
+.empty-img-cont{
+  padding: 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}

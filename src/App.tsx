@@ -1,11 +1,12 @@
 import "./App.css";
 import { Search, Moon, Add, Trash3, Pen } from "reicon-react";
+import DetectiveImage from "./assets/seeking-todo.png";
 
 function App() {
   return (
     <>
       <main>
-        <div className="add-todo">
+        {/* <div className="add-todo">
           <div className="todo-modal">
             <h1 className="title">New Task</h1>
             <input type="text" placeholder="Input your task..." />
@@ -14,7 +15,8 @@ function App() {
               <button className="save-btn">Apply</button>
             </div>
           </div>
-        </div>
+        </div> */}
+
         <div className="main">
           <div className="title-container">
             <h1 className="inter-bold title" style={{ textAlign: "center" }}>
@@ -43,7 +45,7 @@ function App() {
 
           <div className="content-container">
             <div className="todo-display">
-              <div className="todo-item">
+              {/* <div className="todo-item">
                 <div className="first-col">
                   <div className="checkbox ">
                     <div className="checkbox-active"></div>
@@ -55,6 +57,11 @@ function App() {
                   <Pen />
                   <Trash3></Trash3>
                 </div>
+              </div> */}
+
+              <div className="empty-img-cont">
+                <img src={DetectiveImage} alt="" />
+                <p>Empty...</p>
               </div>
 
               <button className="add-btn">
