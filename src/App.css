@@ -1,0 +1,129 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  --primary: #6c63ff;
+  --white: #f7f7f7;
+  --black: #252525;
+
+  font-family: "Inter", sans-serif;
+}
+.inter-normal {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.inter-bold {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 100vh;
+}
+
+.top-row-container {
+  display: flex;
+  gap: 24px;
+}
+
+.search-container {
+  display: flex;
+  padding: 4px 12px;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+
+  border-radius: 4px;
+
+  width: 100%;
+}
+
+.search-container input {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.theme-switcher {
+  background-color: var(--primary);
+  padding: 8px;
+  outline: none;
+  border: none;
+  color: white;
+  border-radius: 4px;
+}
+
+#filter {
+  background-color: var(--primary);
+  padding: 8px;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+
+  color: white;
+}
+
+/* Display TODO items */
+
+.content-container {
+  height: 80%;
+  width: 100%;
+}
+
+.todo-display {
+  margin: 0 auto;
+  padding: 24px 0;
+  position: relative;
+  width: 80%;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.first-col {
+  display: flex;
+  gap: 16px;
+}
+
+.first-col p {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.add-btn {
+  background-color: var(--primary);
+  color: white;
+
+  padding: 14px;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px 1px var(--primary);
+
+  position: absolute;
+  top: 85%;
+  left: 92%;
+  z-index: 10;
+}
+
+/* Text Styling */
+
+.title {
+  font-size: 24px;
+  padding: 24px 0;
+}
