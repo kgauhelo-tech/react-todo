@@ -9,19 +9,19 @@ function App() {
   const [showCreate, setShowCreate] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const titleRef = useRef<HTMLInputElement | null>(null);
-  const descriptionRef = useRef<HTMLInputElement | null>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
+  const dueDateRef = useRef<HTMLInputElement | null>(null);
   const checkmarkRef = useRef<HTMLDivElement | null>(null);
+  const [isComplete, setIsComplete] = useState(false);
 
   const todoList: todo[] = getAllTodos();
   useEffect(() => {}, [todoList]);
 
   const saveTodoAndClose = () => {
+    setErrorMessage(null);
     const title = titleRef.current?.value;
     const description = descriptionRef.current?.value;
-
-    // Create a due date picture
-    const dueDate = new Date();
-    const now = new Date();
+    const dueDate = dueDateRef.current?.value;
 
     if (title === "" || title === null) {
       setErrorMessage("Title is required");
@@ -29,14 +29,15 @@ function App() {
     } else if (description === "" || description === null) {
       setErrorMessage("Description is required");
       return;
-    } else if (dueDate < now || dueDate === null) {
+    } else if (dueDate === undefined || dueDate === null || dueDate === "") {
       setErrorMessage("Date is required to be in the future");
       return;
     } else if (
       title !== undefined &&
       title !== null &&
       description !== undefined &&
-      description !== null
+      description !== null &&
+      dueDate !== undefined
     ) {
       createTodo(title, description, dueDate);
       setShowCreate(false);
@@ -47,14 +48,12 @@ function App() {
     id: string,
     title: string,
     description: string,
-    dueDate: Date,
+    dueDate: string,
     isComplete: boolean,
   ) => {
-    updateTodo(id, title, description, dueDate, isComplete);
-
-    // checkmarkRef.current?.className = "checkbox-active";
-
-    checkmarkRef.current?.classList.add("checkbox-active")
+    // updateTodo(id, title, description, dueDate, isComplete);
+    setIsComplete(!isComplete);
+    console.log(!isComplete);
   };
 
   return (
@@ -69,6 +68,15 @@ function App() {
                 type="text"
                 placeholder="Input your task..."
               />
+
+              <textarea
+                ref={descriptionRef}
+                name="description"
+                id="description"
+                placeholder="Describe your task here..."
+              ></textarea>
+
+              <input ref={dueDateRef} type="date" name="" id="" />
               <div className="btn-cont">
                 <button
                   className="cancel-btn"
@@ -79,8 +87,8 @@ function App() {
                 <button className="save-btn" onClick={saveTodoAndClose}>
                   Apply
                 </button>
-                {errorMessage && <p>{errorMessage}</p>}
               </div>
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
             </div>
           </div>
         )}
@@ -115,38 +123,35 @@ function App() {
             <div className="todo-display">
               {todoList.length > 0 ? (
                 <div className="todo-item">
-                  <div className="first-col">
-                    <div className="checkbox ">
-                      <div className="checkbox-active"></div>
-                    </div>
-                    <p>TODO #1</p>
-                    {todoList.map((todo) => (
-                      <>
-                        <div className="first-col">
-                          <div className="checkbox ">
-                            <div
-                              ref={checkmarkRef}
-                              onClick={() =>
-                                handleCheckClick(
-                                  todo.id,
-                                  todo.title,
-                                  todo.description,
-                                  todo.dueDate,
-                                  !todo.isComplete,
-                                )
-                              }
-                            ></div>
-                          </div>
+                  {todoList.map((todo) => (
+                    <>
+                      <div
+                        className="first-col"
+                        onClick={() =>
+                          handleCheckClick(
+                            todo.id,
+                            todo.title,
+                            todo.description,
+                            todo.dueDate,
+                            isComplete,
+                          )
+                        }
+                      >
+                        <div className="checkbox ">
+                          <div
+                            className={isComplete ? "checkbox-active" : ""}
+                            ref={checkmarkRef}
+                          ></div>
+                        </div>
 
-                          <p>{todo.title}</p>
-                        </div>
-                        <div className="actions">
-                          <Pen />
-                          <Trash3></Trash3>
-                        </div>
-                      </>
-                    ))}
-                  </div>
+                        <p className={isComplete ? "strikethrough" : ""}>{todo.title}</p>
+                      </div>
+                      <div className="actions">
+                        <Pen />
+                        <Trash3></Trash3>
+                      </div>
+                    </>
+                  ))}
                 </div>
               ) : (
                 <div className="empty-img-cont">

@@ -8,7 +8,7 @@ export const todoList: todo[] = [];
 export const createTodo = (
   title: string,
   description: string,
-  dueDate: Date,
+  dueDate: string,
 ) => {
   const newTodo: todo = {
     id: uuidv4(),
@@ -25,7 +25,7 @@ export const updateTodo = (
   id: string,
   title: string,
   description: string,
-  dueDate: Date,
+  dueDate: string,
   isComplete: boolean,
 ) => {
   const index = todoList.findIndex((todo) => todo.id === id);
