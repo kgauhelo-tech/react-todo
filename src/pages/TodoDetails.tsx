@@ -1,5 +1,4 @@
-import React from "react";
-import { getAllTodos, todoList } from "../logic/functionality";
+import { getAllTodos } from "../logic/functionality";
 import { useNavigate, useParams } from "react-router";
 import styles from "./TodoDetails.module.css";
 
