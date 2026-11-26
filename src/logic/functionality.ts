@@ -43,6 +43,12 @@ export const updateTodo = (
   }
 };
 
+export const updateTodoStatus = (id: string, status: boolean) => {
+  const index = todoList.findIndex((todo) => todo.id === id);
+
+  if (index > -1) todoList[index].isComplete = status;
+};
+
 export const deleteTodo = (id: string) => {
   const index = todoList.findIndex((todo) => todo.id === id);
 
@@ -60,5 +66,5 @@ export const getTodoById = (id: string) => {
 };
 
 export const getAllTodos = () => {
-  return todoList;
+  return todoList.slice();
 };
