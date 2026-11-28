@@ -95,7 +95,7 @@
   scrollbar-width: none;
 }
 
-.todo-list{
+.todo-list {
   display: flex;
   flex-direction: column;
 }
@@ -120,12 +120,6 @@
   text-transform: uppercase;
 }
 
-.sctions {
-  display: flex;
-  flex-direction: row;
-  gap: 54px;
-}
-
 .strikethrough {
   text-decoration: line-through;
 }
@@ -144,17 +138,35 @@
   background-color: var(--primary);
 }
 
-.add-btn {
+.selection-active {
+  display: flex;
+  height: 100%;
   background-color: var(--primary);
-  color: white;
+}
+
+.delete-btn {
+  background-color: var(--white);
+  color: var(--primary);
 
   padding: 14px;
   border: none;
   border-radius: 50%;
   box-shadow: 1px 1px 5px 1px var(--primary);
+}
 
+.add-btn {
+  background-color: var(--primary);
+  color: white;
+  margin-bottom: 8px;
+  padding: 14px;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px 1px var(--primary);
+}
+
+.btns-container {
   position: absolute;
-  top: 85%;
+  top: 75%;
   left: 92%;
   z-index: 10;
 }
@@ -168,7 +180,7 @@
 
 .heading {
   font-size: 20px;
-  padding: 16px 0;
+  padding: 8px 0;
 }
 
 /* Todo styling */
@@ -192,7 +204,6 @@
   background-color: var(--white);
   border-radius: 16px;
   opacity: 1;
-
   padding: 24px 0;
   display: flex;
   flex-direction: column;
@@ -263,6 +274,10 @@ input::placeholder {
   color: var(--primary);
 }
 
+.delete-todo {
+  height: fit-content !important;
+}
+
 /* Empty State Styling */
 
 .empty-img-cont {
@@ -280,4 +295,49 @@ input::placeholder {
 .error-message {
   color: red;
   font-size: 15px;
+}
+
+@media (min-width: 1200px) {
+  .todo-modal {
+    height: 65%;
+    width: 40%;
+    opacity: 1;
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .top-row-container {
+    gap: 16px;
+  }
+
+  .main > div {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .todo-modal {
+    width: 90%;
+    height: 80%;
+  }
+
+  .add-btn {
+    top: 85%;
+    left: 90%;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .add-btn {
+    top: 85%;
+    left: 81%;
+  }
+}
+
+.hidden {
+  display: none;
 }

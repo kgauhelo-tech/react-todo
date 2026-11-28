@@ -68,3 +68,12 @@ export const getTodoById = (id: string) => {
 export const getAllTodos = () => {
   return todoList.slice();
 };
+
+export const deleteTodos = (ids: string[]) => {
+  for (let index = 0; index < ids.length; index++) {
+    const todoIndex = todoList.findIndex((todo) => todo.id === ids[index]);
+    if (todoIndex > -1) {
+      deleteTodo(ids[index]);
+    }
+  }
+};
