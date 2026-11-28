@@ -34,6 +34,8 @@ export const MainView = () => {
   type filterType = "all" | "incomplete" | "complete";
   const [filter, setFilter] = useState<filterType>("all");
   const filterRef = useRef<HTMLSelectElement | null>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const [searchValue, setSearchValue] = useState<string>();
 
   const navigate = useNavigate();
 
@@ -125,6 +127,12 @@ export const MainView = () => {
     }
   };
 
+  const handleSearch = () => {
+    const searchValue = searchRef.current?.value;
+    setSearchValue(searchValue ?? "");
+    setFilter("all");
+  };
+
   return (
     <main>
       {showCreate && (
@@ -180,7 +188,12 @@ export const MainView = () => {
 
         <div className="top-row-container">
           <div className="search-container">
-            <input type="text" placeholder="Search todo..." />
+            <input
+              ref={searchRef}
+              onChange={handleSearch}
+              type="text"
+              placeholder="Search todo..."
+            />
             <div className="search-icon-container">
               <Search />
             </div>
@@ -209,42 +222,50 @@ export const MainView = () => {
                 <div
                   className={`${filter === "all" ? "todo-item-cont" : "hidden"}`}
                 >
-                  {todoList.map((todo) => (
-                    <ListItems
-                      key={todo.id}
-                      isSelected={ids.includes(todo.id)}
-                      onSelectItem={() => {
-                        console.log(ids, "pre selection logic");
+                  {todoList
+                    .filter((item) => {
+                      return searchValue?.toLowerCase() === ""
+                        ? item
+                        : item.title
+                            .toLocaleLowerCase()
+                            .includes(searchValue ?? "");
+                    })
+                    .map((todo) => (
+                      <ListItems
+                        key={todo.id}
+                        isSelected={ids.includes(todo.id)}
+                        onSelectItem={() => {
+                          console.log(ids, "pre selection logic");
 
-                        const index = ids.findIndex((id) => id === todo.id);
-                        if (index > -1) {
-                          const idList = ids.slice();
-                          idList.splice(index, 1);
-                          setIds(idList);
-                        } else {
-                          setIds([...ids, todo.id]);
+                          const index = ids.findIndex((id) => id === todo.id);
+                          if (index > -1) {
+                            const idList = ids.slice();
+                            idList.splice(index, 1);
+                            setIds(idList);
+                          } else {
+                            setIds([...ids, todo.id]);
+                          }
+                          console.log(ids, "ids post-selection");
+                        }}
+                        onEdit={() => {
+                          const currentTask = currentTodo(todo ? todo.id : "");
+                          setTodo(currentTask);
+                          setShowEdit(!showEdit);
+                        }}
+                        onCheck={
+                          todo
+                            ? () => updateStatus(todo.id, todo.isComplete)
+                            : () => {}
                         }
-                        console.log(ids, "ids post-selection");
-                      }}
-                      onEdit={() => {
-                        const currentTask = currentTodo(todo ? todo.id : "");
-                        setTodo(currentTask);
-                        setShowEdit(!showEdit);
-                      }}
-                      onCheck={
-                        todo
-                          ? () => updateStatus(todo.id, todo.isComplete)
-                          : () => {}
-                      }
-                      onNavigateToDetails={() => {
-                        const currentTask = currentTodo(todo ? todo.id : "");
-                        setTodo(currentTask);
-                        handleNavigation(currentTask ? currentTask.id : "");
-                      }}
-                      selectionState={selectionState}
-                      todo={todo}
-                    />
-                  ))}
+                        onNavigateToDetails={() => {
+                          const currentTask = currentTodo(todo ? todo.id : "");
+                          setTodo(currentTask);
+                          handleNavigation(currentTask ? currentTask.id : "");
+                        }}
+                        selectionState={selectionState}
+                        todo={todo}
+                      />
+                    ))}
                 </div>
 
                 <div
@@ -353,14 +374,6 @@ export const MainView = () => {
             )}
 
             <div className="btns-container">
-              {!selectionState && (
-                <button className="add-btn" onClick={() => setShowCreate(true)}>
-                  <Add></Add>
-                </button>
-              )}
-
-              <br />
-
               {selectionState && (
                 <button
                   className="add-btn"
@@ -378,6 +391,12 @@ export const MainView = () => {
               >
                 <Trash3 />
               </button>
+
+              {!selectionState && (
+                <button className="add-btn" onClick={() => setShowCreate(true)}>
+                  <Add></Add>
+                </button>
+              )}
             </div>
           </div>
         </div>
